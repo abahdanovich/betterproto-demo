@@ -3,7 +3,7 @@ from contextlib import contextmanager
 
 from grpclib.client import Channel
 
-from .helloworld import GreeterStub
+from .helloworld import GreeterStub, SomeRecord
 
 
 @contextmanager
@@ -32,8 +32,8 @@ async def main():
         # for row in response.rows:
         #     print(row.to_json())
 
-        async for row in stub.get_some_stream(rows_num=10_000):
-            print(row.to_json())
+        rows = [row async for row in stub.get_some_stream(rows_num=20_000)]
+        print(len(rows))
 
 
 def run():

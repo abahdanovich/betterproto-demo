@@ -68,7 +68,7 @@ async def serve():
 
 def run():
     print("Preparing data")
-    fake_data.some_collection = generate_fake_collection(10_000)
+    fake_data.some_collection = generate_fake_collection(20_000)
     asyncio.run(serve())
 
 
