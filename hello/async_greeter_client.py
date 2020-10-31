@@ -1,7 +1,7 @@
 import asyncio
 from contextlib import contextmanager
 from grpclib.client import Channel
-from .helloworld_pb2 import GreeterStub
+from .helloworld import GreeterStub
 
 
 @contextmanager

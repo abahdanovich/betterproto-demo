@@ -1,7 +1,7 @@
 from concurrent import futures
 import grpc
 
-from .helloworld_pb2 import HelloReply, HelloRequest
+from .helloworld import HelloReply, HelloRequest
 from .helloworld_pb2_grpc import GreeterServicer, add_GreeterServicer_to_server
 
 
