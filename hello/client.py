@@ -17,8 +17,13 @@ async def main():
     with ManagedChannel(host="127.0.0.1", port=50051) as channel:
         stub = GreeterStub(channel)
         response = await stub.say_hello(name="world")
-    print("Greeter client received: " + response.message)
+        print(response.message)
 
+        async for response in stub.say_hello_stream(name="world"):
+            print(response.message)
+
+        response = await stub.say_hello_nested(name="world")
+        print(response.message)            
 
 def run():
     asyncio.run(main())

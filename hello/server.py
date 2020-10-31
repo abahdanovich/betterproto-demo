@@ -1,13 +1,19 @@
 import asyncio
 import grpc
 
-from .helloworld import HelloReply, HelloRequest
+from .helloworld import HelloReply, HelloRequest, HelloNestedReply, FooBar
 from .helloworld_pb2_grpc import GreeterServicer, add_GreeterServicer_to_server
 
 
 class Greeter(GreeterServicer):
     async def SayHello(self, request: HelloRequest, context):
-        return HelloReply(message=f"Hello, {request.name}!")
+        return HelloReply(message=[f"Hello, {request.name}!"])
+
+    async def SayHelloStream(self, request: HelloRequest, context):
+        yield HelloReply(message=[f"Hello, {request.name}!"])
+
+    async def SayHelloNested(self, request: HelloRequest, context):
+        return HelloNestedReply(message=[FooBar(foo='Hello', bar=request.name)])
 
 
 async def serve():

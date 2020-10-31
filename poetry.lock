@@ -110,6 +110,19 @@ version = "0.4.4"
 
 [[package]]
 category = "main"
+description = "Mypy stubs for gRPC"
+name = "grpc-stubs"
+optional = false
+python-versions = ">=3.6"
+version = "1.24.2"
+
+[package.dependencies]
+grpcio = "*"
+mypy = ">=0.730"
+typing-extensions = "*"
+
+[[package]]
+category = "main"
 description = "HTTP/2-based RPC framework"
 name = "grpcio"
 optional = false
@@ -242,7 +255,7 @@ python-versions = ">=3.5"
 version = "5.0.0"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Optional static typing for Python"
 name = "mypy"
 optional = false
@@ -418,7 +431,7 @@ python-versions = "*"
 version = "1.12.1"
 
 [metadata]
-content-hash = "7da387c57e3db0e9aca6d9bb6de6d017a547e73e9f4a395ef5348e98af1c6790"
+content-hash = "3f9f9b3f37ae1bac8ccb45b23da2d67a1b7eea30310e67db57dd235ac623f337"
 lock-version = "1.0"
 python-versions = "^3.8"
 
@@ -452,6 +465,10 @@ click = [
 colorama = [
     {file = "colorama-0.4.4-py2.py3-none-any.whl", hash = "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"},
     {file = "colorama-0.4.4.tar.gz", hash = "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"},
+]
+grpc-stubs = [
+    {file = "grpc-stubs-1.24.2.tar.gz", hash = "sha256:a3995179f36097346d13975cac006a37c1b359fff3335501ee7f89d78c14466c"},
+    {file = "grpc_stubs-1.24.2-py3-none-any.whl", hash = "sha256:e1f53f6498c83a4b8e72fc0ddada35cc8bd177e7f5844f1cee3e8790a4933844"},
 ]
 grpcio = [
     {file = "grpcio-1.33.2-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:c5030be8a60fb18de1fc8d93d130d57e4296c02f229200df814f6578da00429e"},

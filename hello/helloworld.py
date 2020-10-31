@@ -2,6 +2,7 @@
 # sources: helloworld.proto
 # plugin: python-betterproto
 from dataclasses import dataclass
+from typing import AsyncGenerator, List
 
 import betterproto
 import grpclib
@@ -14,7 +15,23 @@ class HelloRequest(betterproto.Message):
 
 @dataclass
 class HelloReply(betterproto.Message):
+    message: List[str] = betterproto.string_field(1)
+
+
+@dataclass
+class HelloStreamReply(betterproto.Message):
     message: str = betterproto.string_field(1)
+
+
+@dataclass
+class FooBar(betterproto.Message):
+    foo: str = betterproto.string_field(1)
+    bar: str = betterproto.string_field(2)
+
+
+@dataclass
+class HelloNestedReply(betterproto.Message):
+    message: List["FooBar"] = betterproto.message_field(1)
 
 
 class GreeterStub(betterproto.ServiceStub):
@@ -26,4 +43,27 @@ class GreeterStub(betterproto.ServiceStub):
             "/helloworld.Greeter/SayHello",
             request,
             HelloReply,
+        )
+
+    async def say_hello_stream(
+        self, *, name: str = ""
+    ) -> AsyncGenerator[HelloStreamReply, None]:
+        request = HelloRequest()
+        request.name = name
+
+        async for response in self._unary_stream(
+            "/helloworld.Greeter/SayHelloStream",
+            request,
+            HelloStreamReply,
+        ):
+            yield response
+
+    async def say_hello_nested(self, *, name: str = "") -> HelloNestedReply:
+        request = HelloRequest()
+        request.name = name
+
+        return await self._unary_unary(
+            "/helloworld.Greeter/SayHelloNested",
+            request,
+            HelloNestedReply,
         )
