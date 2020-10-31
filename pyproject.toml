@@ -4,6 +4,10 @@ version = "0.1.0"
 description = ""
 authors = ["Your Name <you@example.com>"]
 
+packages = [
+    { include="hello", from="." },
+]
+
 [tool.poetry.dependencies]
 python = "^3.8"
 betterproto = {extras = ["compiler"], version = "^1.2.5"}
@@ -15,6 +19,10 @@ grpcio-tools = "^1.33.2"
 pylint = "^2.6.0"
 mypy = "^0.790"
 pytest = "^6.1.2"
+
+[tool.poetry.scripts]
+server = 'hello.async_greeter_server:run'
+client = 'hello.async_greeter_client:run'
 
 [build-system]
 requires = ["poetry>=0.12"]

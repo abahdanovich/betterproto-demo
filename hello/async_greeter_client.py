@@ -20,4 +20,9 @@ async def main():
     print("Greeter client received: " + response.message)
 
 
-asyncio.run(main())
+def run():
+    asyncio.run(main())
+
+
+if __name__ == "__main__":
+    run()
