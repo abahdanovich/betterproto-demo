@@ -6,6 +6,8 @@ service Greeter {
   rpc SayHello (HelloRequest) returns (HelloReply) {}
   rpc SayHelloStream(HelloRequest) returns (stream HelloStreamReply);
   rpc SayHelloNested(HelloRequest) returns (HelloNestedReply);
+  rpc GetSomeCollection(SomeRequest) returns (SomeCollection);
+  rpc GetSomeStream(SomeRequest) returns (stream SomeRecord);
 }
 
 message HelloRequest {
@@ -27,4 +29,19 @@ message FooBar {
 
 message HelloNestedReply {
   repeated FooBar message = 1;
+}
+
+message SomeRequest {
+  uint32 rows_num = 1;
+}
+
+message SomeRecord {
+  string name = 1;
+  string address = 2;
+  uint32 age = 3;
+  string country = 4;
+}
+
+message SomeCollection {
+  repeated SomeRecord rows = 1;
 }
