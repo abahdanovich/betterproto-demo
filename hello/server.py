@@ -13,6 +13,7 @@ from .helloworld import (
     SomeCollection,
     SomeRecord,
     SomeRequest,
+    CustomProps
 )
 from .helloworld_pb2_grpc import GreeterServicer, add_GreeterServicer_to_server
 
@@ -25,6 +26,10 @@ def generate_fake_collection(rows_num: int) -> List[SomeRecord]:
             address=fake.address(),
             age=fake.random_int(0, 100),
             country=fake.country_code(),
+            custom_props=CustomProps(
+                foo=fake.date(),
+                bar=fake.random_int()
+            )
         )
         for _ in range(rows_num)
     ]

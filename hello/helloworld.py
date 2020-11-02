@@ -40,11 +40,18 @@ class SomeRequest(betterproto.Message):
 
 
 @dataclass
+class CustomProps(betterproto.Message):
+    foo: str = betterproto.string_field(1)
+    bar: int = betterproto.uint32_field(2)
+
+
+@dataclass
 class SomeRecord(betterproto.Message):
     name: str = betterproto.string_field(1)
     address: str = betterproto.string_field(2)
     age: int = betterproto.uint32_field(3)
     country: str = betterproto.string_field(4)
+    custom_props: "CustomProps" = betterproto.message_field(5)
 
 
 @dataclass

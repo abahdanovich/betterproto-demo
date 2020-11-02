@@ -1,7 +1,7 @@
 import asyncio
 import json
 from contextlib import contextmanager
-
+import timeit
 import orjson
 from grpclib.client import Channel
 
@@ -37,10 +37,16 @@ async def main():
         rows = [row async for row in stub.get_some_stream(rows_num=20_000)]
         print(len(rows))
 
-        # async for row in stub.get_some_stream(rows_num=20_000):
+        t1 = timeit.timeit('out = map(lambda row:   json.dumps(row.to_dict()), rows)', number=20, globals={'rows': []})
+        print(' json:', round(t1 * 1000, 3), 'ms')
+
+        t2 = timeit.timeit('out = map(lambda row: orjson.dumps(row).decode(),  rows)', number=20, globals={'rows': []})
+        print('orjson:', round(t2 * 1000, 3), 'ms')
+
+        # for row in rows:
         #     print(json.dumps(row.to_dict()))
 
-        # async for row in stub.get_some_stream(rows_num=20_000):
+        # for row in rows:
         #     print(orjson.dumps(row).decode())
 
 
