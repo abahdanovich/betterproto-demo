@@ -31,7 +31,7 @@ async def main():
         rows = [row async for row in stub.get_some_stream(rows_num=20_000)]
         p2 = perf_counter()
 
-        print(f'Fetching {len(rows)} rows from server took: {round(p2-p1, 3)} s')
+        print(f"Fetching {len(rows)} rows from server took: {round(p2-p1, 3)} s")
 
         # t1 = timeit.timeit('out = map(lambda row:   json.dumps(row.to_dict()), rows)', number=20, globals={'rows': []})
         # print(' json:', round(t1 * 1000, 3), 'ms')
