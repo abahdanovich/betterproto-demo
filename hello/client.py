@@ -1,6 +1,8 @@
 import asyncio
+import json
 from contextlib import contextmanager
 
+import orjson
 from grpclib.client import Channel
 
 from .helloworld import GreeterStub, SomeRecord
@@ -34,6 +36,12 @@ async def main():
 
         rows = [row async for row in stub.get_some_stream(rows_num=20_000)]
         print(len(rows))
+
+        # async for row in stub.get_some_stream(rows_num=20_000):
+        #     print(json.dumps(row.to_dict()))
+
+        # async for row in stub.get_some_stream(rows_num=20_000):
+        #     print(orjson.dumps(row).decode())
 
 
 def run():
