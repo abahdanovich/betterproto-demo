@@ -2,7 +2,8 @@
 # sources: helloworld.proto
 # plugin: python-betterproto
 from dataclasses import dataclass
-from typing import AsyncGenerator, List
+from datetime import datetime
+from typing import AsyncGenerator, List, Optional
 
 import betterproto
 import grpclib
@@ -41,8 +42,11 @@ class SomeRequest(betterproto.Message):
 
 @dataclass
 class CustomProps(betterproto.Message):
-    foo: str = betterproto.string_field(1)
-    bar: int = betterproto.uint32_field(2)
+    foo: Optional[int] = betterproto.message_field(1, wraps=betterproto.TYPE_INT32)
+    ts: datetime = betterproto.message_field(2)
+    is_active: Optional[bool] = betterproto.message_field(
+        3, wraps=betterproto.TYPE_BOOL
+    )
 
 
 @dataclass

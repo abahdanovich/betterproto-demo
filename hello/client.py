@@ -4,7 +4,7 @@ from contextlib import contextmanager
 import timeit
 import orjson
 from grpclib.client import Channel
-
+from time import perf_counter 
 from .helloworld import GreeterStub, SomeRecord
 
 
@@ -34,14 +34,17 @@ async def main():
         # for row in response.rows:
         #     print(row.to_json())
 
+        p1 = perf_counter()
         rows = [row async for row in stub.get_some_stream(rows_num=20_000)]
-        print(len(rows))
+        p2 = perf_counter()
 
-        t1 = timeit.timeit('out = map(lambda row:   json.dumps(row.to_dict()), rows)', number=20, globals={'rows': []})
-        print(' json:', round(t1 * 1000, 3), 'ms')
+        print(f'Fetching {len(rows)} rows from server took: {round(p2-p1, 3)} s')
 
-        t2 = timeit.timeit('out = map(lambda row: orjson.dumps(row).decode(),  rows)', number=20, globals={'rows': []})
-        print('orjson:', round(t2 * 1000, 3), 'ms')
+        # t1 = timeit.timeit('out = map(lambda row:   json.dumps(row.to_dict()), rows)', number=20, globals={'rows': []})
+        # print(' json:', round(t1 * 1000, 3), 'ms')
+
+        # t2 = timeit.timeit('out = map(lambda row: orjson.dumps(row).decode(),  rows)', number=20, globals={'rows': []})
+        # print('orjson:', round(t2 * 1000, 3), 'ms')
 
         # for row in rows:
         #     print(json.dumps(row.to_dict()))

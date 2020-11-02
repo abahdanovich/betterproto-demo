@@ -24,7 +24,7 @@ mypy = "^0.790"
 pytest = "^6.1.2"
 
 [tool.poetry.scripts]
-server = 'hello.server:run'
+server = 'hello.server:run(20_000)'
 client = 'hello.client:run'
 
 [build-system]

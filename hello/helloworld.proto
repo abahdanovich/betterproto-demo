@@ -1,5 +1,8 @@
 syntax = "proto3";
 
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
 package helloworld;
 
 service Greeter {
@@ -36,8 +39,9 @@ message SomeRequest {
 }
 
 message CustomProps {
-  string foo = 1;
-  uint32 bar = 2;
+  google.protobuf.Int32Value foo = 1;
+  google.protobuf.Timestamp ts = 2;
+  google.protobuf.BoolValue is_active = 3;
 }
 
 message SomeRecord {

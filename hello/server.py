@@ -1,20 +1,15 @@
 import asyncio
+import datetime
+import sys
 from dataclasses import dataclass
 from typing import List
 
 import grpc
 from faker import Faker
+from google.protobuf.struct_pb2 import Struct
 
-from .helloworld import (
-    FooBar,
-    HelloNestedReply,
-    HelloReply,
-    HelloRequest,
-    SomeCollection,
-    SomeRecord,
-    SomeRequest,
-    CustomProps
-)
+from .helloworld import (CustomProps, FooBar, HelloNestedReply, HelloReply,
+                         HelloRequest, SomeCollection, SomeRecord, SomeRequest)
 from .helloworld_pb2_grpc import GreeterServicer, add_GreeterServicer_to_server
 
 
@@ -27,8 +22,9 @@ def generate_fake_collection(rows_num: int) -> List[SomeRecord]:
             age=fake.random_int(0, 100),
             country=fake.country_code(),
             custom_props=CustomProps(
-                foo=fake.date(),
-                bar=fake.random_int()
+                foo=fake.random_int(0, 100),
+                ts=fake.date_time(tzinfo=datetime.timezone.utc),
+                is_active=fake.boolean()
             )
         )
         for _ in range(rows_num)
@@ -71,11 +67,11 @@ async def serve():
     await server.wait_for_termination()
 
 
-def run():
-    print("Preparing data")
-    fake_data.some_collection = generate_fake_collection(20_000)
+def run(rows_count: str = '20_000'):
+    print(f"Preparing data ({rows_count} rows)")
+    fake_data.some_collection = generate_fake_collection(int(rows_count))
     asyncio.run(serve())
 
 
 if __name__ == "__main__":
-    run()
+    run(*sys.argv[1:])
