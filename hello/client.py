@@ -1,24 +1,17 @@
 import asyncio
 import json
-from contextlib import contextmanager
 import timeit
+from contextlib import contextmanager
+from time import perf_counter
+
 import orjson
 from grpclib.client import Channel
-from time import perf_counter 
+
 from .helloworld import GreeterStub, SomeRecord
 
 
-@contextmanager
-def ManagedChannel(*args, **kwargs):
-    channel = Channel(*args, **kwargs)
-    try:
-        yield channel
-    finally:
-        channel.close()
-
-
 async def main():
-    with ManagedChannel(host="127.0.0.1", port=50051) as channel:
+    async with Channel(host="127.0.0.1", port=50051) as channel:
         stub = GreeterStub(channel)
 
         # response = await stub.say_hello(name="world")
@@ -49,8 +42,8 @@ async def main():
         # for row in rows:
         #     print(json.dumps(row.to_dict()))
 
-        # for row in rows:
-        #     print(orjson.dumps(row).decode())
+        for row in rows:
+            print(orjson.dumps(row).decode())
 
 
 def run():
