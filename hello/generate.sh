@@ -10,4 +10,5 @@ poetry run python -m grpc_tools.protoc \
     --grpclib_python_out=$DIR \
     helloworld.proto 
 
-sed -i 's/import helloworld_pb2/from . import helloworld as helloworld_pb2/g' $DIR/helloworld_grpc.py
+sed -i 's/import helloworld_pb2/from . import helloworld/g' $DIR/helloworld_grpc.py
+sed -i 's/helloworld_pb2/helloworld/g' $DIR/helloworld_grpc.py
