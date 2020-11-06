@@ -1,16 +1,16 @@
 import asyncio
 import json
+import sys
 import timeit
-from contextlib import contextmanager
 from time import perf_counter
 
 import orjson
 from grpclib.client import Channel
 
-from .helloworld import GreeterStub, SomeRecord
+from .helloworld import GreeterStub
 
 
-async def main():
+async def main(rows_num: int):
     async with Channel(host="127.0.0.1", port=50051) as channel:
         stub = GreeterStub(channel)
 
@@ -28,7 +28,7 @@ async def main():
         #     print(row.to_json())
 
         p1 = perf_counter()
-        rows = [row async for row in stub.get_some_stream(rows_num=20_000)]
+        rows = [row async for row in stub.get_some_stream(rows_num=rows_num)]
         p2 = perf_counter()
 
         print(f"Fetching {len(rows)} rows from server took: {round(p2-p1, 3)} s")
@@ -45,10 +45,9 @@ async def main():
         for row in rows:
             print(orjson.dumps(row).decode())
 
-
-def run():
-    asyncio.run(main())
+def run(rows_num: str = "20_000"):
+    asyncio.run(main(int(rows_num)))
 
 
 if __name__ == "__main__":
-    run()
+    run(*sys.argv[1:])

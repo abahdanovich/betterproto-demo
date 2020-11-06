@@ -4,7 +4,6 @@ import sys
 from dataclasses import dataclass
 from typing import List
 
-import grpc
 from faker import Faker  # type: ignore
 from grpclib.server import Server, Stream
 from grpclib.utils import graceful_exit
