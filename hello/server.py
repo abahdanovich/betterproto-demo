@@ -41,33 +41,33 @@ fake_data = FakeData(some_collection=[])
 
 
 class Greeter(GreeterBase):
-    async def SayHello(self, stream: Stream[HelloRequest, HelloReply]):
+    async def say_hello(self, stream: Stream[HelloRequest, HelloReply]):
         request = await stream.recv_message()
         if request:
             await stream.send_message(HelloReply(message=[f"Hello, {request.name}!"]))
 
-    async def SayHelloStream(self, stream: Stream[HelloRequest, HelloStreamReply]):
+    async def say_hello_stream(self, stream: Stream[HelloRequest, HelloStreamReply]):
         request = await stream.recv_message()
         if request:
             await stream.send_message(
                 HelloStreamReply(message=f"Hello, {request.name}!")
             )
 
-    async def SayHelloNested(self, stream: Stream[HelloRequest, HelloNestedReply]):
+    async def say_hello_nested(self, stream: Stream[HelloRequest, HelloNestedReply]):
         request = await stream.recv_message()
         if request:
             await stream.send_message(
                 HelloNestedReply(message=[FooBar(foo="Hello", bar=request.name)])
             )
 
-    async def GetSomeCollection(self, stream: Stream[SomeRequest, SomeCollection]):
+    async def get_some_collection(self, stream: Stream[SomeRequest, SomeCollection]):
         request = await stream.recv_message()
         if request:
             await stream.send_message(
                 SomeCollection(rows=fake_data.some_collection[: request.rows_num])
             )
 
-    async def GetSomeStream(self, stream: Stream[SomeRequest, SomeRecord]):
+    async def get_some_stream(self, stream: Stream[SomeRequest, SomeRecord]):
         request = await stream.recv_message()
         if request:
             for row in fake_data.some_collection[: request.rows_num]:

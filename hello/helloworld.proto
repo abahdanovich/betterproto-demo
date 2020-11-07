@@ -6,11 +6,11 @@ import "google/protobuf/wrappers.proto";
 package helloworld;
 
 service Greeter {
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
-  rpc SayHelloStream(HelloRequest) returns (stream HelloStreamReply);
-  rpc SayHelloNested(HelloRequest) returns (HelloNestedReply);
-  rpc GetSomeCollection(SomeRequest) returns (SomeCollection);
-  rpc GetSomeStream(SomeRequest) returns (stream SomeRecord);
+  rpc say_hello (HelloRequest) returns (HelloReply) {}
+  rpc say_hello_stream(HelloRequest) returns (stream HelloStreamReply);
+  rpc say_hello_nested(HelloRequest) returns (HelloNestedReply);
+  rpc get_some_collection(SomeRequest) returns (SomeCollection);
+  rpc get_some_stream(SomeRequest) returns (stream SomeRecord);
 }
 
 message HelloRequest {

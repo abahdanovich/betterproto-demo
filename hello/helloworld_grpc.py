@@ -17,53 +17,53 @@ from . import helloworld
 class GreeterBase(abc.ABC):
 
     @abc.abstractmethod
-    async def SayHello(self, stream: 'grpclib.server.Stream[helloworld.HelloRequest, helloworld.HelloReply]') -> None:
+    async def say_hello(self, stream: 'grpclib.server.Stream[helloworld.HelloRequest, helloworld.HelloReply]') -> None:
         pass
 
     @abc.abstractmethod
-    async def SayHelloStream(self, stream: 'grpclib.server.Stream[helloworld.HelloRequest, helloworld.HelloStreamReply]') -> None:
+    async def say_hello_stream(self, stream: 'grpclib.server.Stream[helloworld.HelloRequest, helloworld.HelloStreamReply]') -> None:
         pass
 
     @abc.abstractmethod
-    async def SayHelloNested(self, stream: 'grpclib.server.Stream[helloworld.HelloRequest, helloworld.HelloNestedReply]') -> None:
+    async def say_hello_nested(self, stream: 'grpclib.server.Stream[helloworld.HelloRequest, helloworld.HelloNestedReply]') -> None:
         pass
 
     @abc.abstractmethod
-    async def GetSomeCollection(self, stream: 'grpclib.server.Stream[helloworld.SomeRequest, helloworld.SomeCollection]') -> None:
+    async def get_some_collection(self, stream: 'grpclib.server.Stream[helloworld.SomeRequest, helloworld.SomeCollection]') -> None:
         pass
 
     @abc.abstractmethod
-    async def GetSomeStream(self, stream: 'grpclib.server.Stream[helloworld.SomeRequest, helloworld.SomeRecord]') -> None:
+    async def get_some_stream(self, stream: 'grpclib.server.Stream[helloworld.SomeRequest, helloworld.SomeRecord]') -> None:
         pass
 
     def __mapping__(self) -> typing.Dict[str, grpclib.const.Handler]:
         return {
-            '/helloworld.Greeter/SayHello': grpclib.const.Handler(
-                self.SayHello,
+            '/helloworld.Greeter/say_hello': grpclib.const.Handler(
+                self.say_hello,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 helloworld.HelloRequest,
                 helloworld.HelloReply,
             ),
-            '/helloworld.Greeter/SayHelloStream': grpclib.const.Handler(
-                self.SayHelloStream,
+            '/helloworld.Greeter/say_hello_stream': grpclib.const.Handler(
+                self.say_hello_stream,
                 grpclib.const.Cardinality.UNARY_STREAM,
                 helloworld.HelloRequest,
                 helloworld.HelloStreamReply,
             ),
-            '/helloworld.Greeter/SayHelloNested': grpclib.const.Handler(
-                self.SayHelloNested,
+            '/helloworld.Greeter/say_hello_nested': grpclib.const.Handler(
+                self.say_hello_nested,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 helloworld.HelloRequest,
                 helloworld.HelloNestedReply,
             ),
-            '/helloworld.Greeter/GetSomeCollection': grpclib.const.Handler(
-                self.GetSomeCollection,
+            '/helloworld.Greeter/get_some_collection': grpclib.const.Handler(
+                self.get_some_collection,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 helloworld.SomeRequest,
                 helloworld.SomeCollection,
             ),
-            '/helloworld.Greeter/GetSomeStream': grpclib.const.Handler(
-                self.GetSomeStream,
+            '/helloworld.Greeter/get_some_stream': grpclib.const.Handler(
+                self.get_some_stream,
                 grpclib.const.Cardinality.UNARY_STREAM,
                 helloworld.SomeRequest,
                 helloworld.SomeRecord,
@@ -74,33 +74,33 @@ class GreeterBase(abc.ABC):
 class GreeterStub:
 
     def __init__(self, channel: grpclib.client.Channel) -> None:
-        self.SayHello = grpclib.client.UnaryUnaryMethod(
+        self.say_hello = grpclib.client.UnaryUnaryMethod(
             channel,
-            '/helloworld.Greeter/SayHello',
+            '/helloworld.Greeter/say_hello',
             helloworld.HelloRequest,
             helloworld.HelloReply,
         )
-        self.SayHelloStream = grpclib.client.UnaryStreamMethod(
+        self.say_hello_stream = grpclib.client.UnaryStreamMethod(
             channel,
-            '/helloworld.Greeter/SayHelloStream',
+            '/helloworld.Greeter/say_hello_stream',
             helloworld.HelloRequest,
             helloworld.HelloStreamReply,
         )
-        self.SayHelloNested = grpclib.client.UnaryUnaryMethod(
+        self.say_hello_nested = grpclib.client.UnaryUnaryMethod(
             channel,
-            '/helloworld.Greeter/SayHelloNested',
+            '/helloworld.Greeter/say_hello_nested',
             helloworld.HelloRequest,
             helloworld.HelloNestedReply,
         )
-        self.GetSomeCollection = grpclib.client.UnaryUnaryMethod(
+        self.get_some_collection = grpclib.client.UnaryUnaryMethod(
             channel,
-            '/helloworld.Greeter/GetSomeCollection',
+            '/helloworld.Greeter/get_some_collection',
             helloworld.SomeRequest,
             helloworld.SomeCollection,
         )
-        self.GetSomeStream = grpclib.client.UnaryStreamMethod(
+        self.get_some_stream = grpclib.client.UnaryStreamMethod(
             channel,
-            '/helloworld.Greeter/GetSomeStream',
+            '/helloworld.Greeter/get_some_stream',
             helloworld.SomeRequest,
             helloworld.SomeRecord,
         )

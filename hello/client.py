@@ -3,11 +3,12 @@ import json
 import sys
 import timeit
 from time import perf_counter
+from typing import List
 
 import orjson
 from grpclib.client import Channel
 
-from .helloworld import GreeterStub
+from .helloworld import GreeterStub, SomeRecord
 
 
 async def main(rows_num: int):
@@ -28,7 +29,7 @@ async def main(rows_num: int):
         #     print(row.to_json())
 
         p1 = perf_counter()
-        rows = [row async for row in stub.get_some_stream(rows_num=rows_num)]
+        rows: List[SomeRecord] = [row async for row in stub.get_some_stream(rows_num=rows_num)]
         p2 = perf_counter()
 
         print(f"Fetching {len(rows)} rows from server took: {round(p2-p1, 3)} s")

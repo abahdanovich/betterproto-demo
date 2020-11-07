@@ -69,7 +69,7 @@ class GreeterStub(betterproto.ServiceStub):
         request.name = name
 
         return await self._unary_unary(
-            "/helloworld.Greeter/SayHello",
+            "/helloworld.Greeter/say_hello",
             request,
             HelloReply,
         )
@@ -81,7 +81,7 @@ class GreeterStub(betterproto.ServiceStub):
         request.name = name
 
         async for response in self._unary_stream(
-            "/helloworld.Greeter/SayHelloStream",
+            "/helloworld.Greeter/say_hello_stream",
             request,
             HelloStreamReply,
         ):
@@ -92,7 +92,7 @@ class GreeterStub(betterproto.ServiceStub):
         request.name = name
 
         return await self._unary_unary(
-            "/helloworld.Greeter/SayHelloNested",
+            "/helloworld.Greeter/say_hello_nested",
             request,
             HelloNestedReply,
         )
@@ -102,7 +102,7 @@ class GreeterStub(betterproto.ServiceStub):
         request.rows_num = rows_num
 
         return await self._unary_unary(
-            "/helloworld.Greeter/GetSomeCollection",
+            "/helloworld.Greeter/get_some_collection",
             request,
             SomeCollection,
         )
@@ -114,7 +114,7 @@ class GreeterStub(betterproto.ServiceStub):
         request.rows_num = rows_num
 
         async for response in self._unary_stream(
-            "/helloworld.Greeter/GetSomeStream",
+            "/helloworld.Greeter/get_some_stream",
             request,
             SomeRecord,
         ):
