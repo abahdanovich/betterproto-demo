@@ -4,7 +4,7 @@ import sys
 import timeit
 from time import perf_counter
 from typing import List
-
+from tqdm.asyncio import tqdm
 import orjson
 from grpclib.client import Channel
 
@@ -46,13 +46,18 @@ async def main(rows_num: int):
         # for row in rows:
         #     print(orjson.dumps(row).decode())
 
-        row: SomeRecord
-        async for row in stub.get_some_stream(rows_num=rows_num):
-            print(orjson.dumps(row).decode())
+        # row: SomeRecord
+        # async for row in stub.get_some_stream(rows_num=rows_num):
+        #     print(orjson.dumps(row).decode())
 
-def run(rows_num: str = "20_000"):
+        async for row in tqdm(stub.get_some_stream(rows_num=rows_num), total=rows_num):
+            pass
+
+
+def run():
+    rows_num: str = sys.argv[1] if len(sys.argv) > 1 else '20_000'
     asyncio.run(main(int(rows_num)))
 
 
 if __name__ == "__main__":
-    run(*sys.argv[1:])
+    run()

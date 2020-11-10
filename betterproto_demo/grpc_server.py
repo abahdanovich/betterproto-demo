@@ -82,11 +82,12 @@ async def main(host="127.0.0.1", port=50051):
         await server.wait_closed()
 
 
-def run(rows_count: str = "20_000"):
-    print(f"Preparing data ({rows_count} rows)")
-    fake_data.some_collection = generate_fake_collection(int(rows_count))
+def run():
+    rows_num: str = sys.argv[1] if len(sys.argv) > 1 else '20_000'
+    print(f"Preparing data ({rows_num} rows)")
+    fake_data.some_collection = generate_fake_collection(int(rows_num))
     asyncio.run(main())
 
 
 if __name__ == "__main__":
-    run(*sys.argv[1:])
+    run()
