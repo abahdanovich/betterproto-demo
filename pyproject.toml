@@ -11,7 +11,7 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.9"
 betterproto = {extras = ["compiler"], version = "^1.2.5"}
-Faker = "^4.14.0"
+Faker = "^5.0.1"
 orjson = "^3.4.3"
 tqdm = "^4.51.0"
 
