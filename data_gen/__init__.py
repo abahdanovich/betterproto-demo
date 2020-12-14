@@ -5,14 +5,14 @@ from typing import List
 from faker import Faker
 
 
-@dataclass()
+@dataclass
 class CustomProps:
     foo: int
     ts: datetime.datetime
     is_active: bool
 
 
-@dataclass()
+@dataclass
 class DomainRecord:
     name: str
     address: str

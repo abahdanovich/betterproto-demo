@@ -69,6 +69,7 @@ def _from_domain_record(r: DomainRecord) -> SomeRecord:
         name=r.name,
         address=r.address,
         age=r.age,
+        country=r.country,
         custom_props=CustomProps(
             foo=rcp.foo,
             ts=rcp.ts,

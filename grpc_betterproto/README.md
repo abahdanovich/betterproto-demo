@@ -1,8 +1,11 @@
+gRPC (betterproto)
+==================
+
 Server
-======
+------
 
 ```
-poetry run grpc-server
+poetry run grpc-betterproto-server
 ```
 
 Output:
@@ -13,10 +16,10 @@ Serving on 127.0.0.1:50051
 ```
 
 Client
-======
+------
 
 ```
-poetry run grpc-client
+poetry run grpc-betterproto-client
 ```
 
 Output:
