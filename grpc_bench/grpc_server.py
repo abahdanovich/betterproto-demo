@@ -41,40 +41,40 @@ fake_data = FakeData(some_collection=[])
 
 
 class Greeter(GreeterBase):
-    async def say_hello(self, stream: Stream[HelloRequest, HelloReply]):
+    async def say_hello(self, stream: Stream[HelloRequest, HelloReply]) -> None:
         request = await stream.recv_message()
         if request:
             await stream.send_message(HelloReply(message=[f"Hello, {request.name}!"]))
 
-    async def say_hello_stream(self, stream: Stream[HelloRequest, HelloStreamReply]):
+    async def say_hello_stream(self, stream: Stream[HelloRequest, HelloStreamReply]) -> None:
         request = await stream.recv_message()
         if request:
             await stream.send_message(
                 HelloStreamReply(message=f"Hello, {request.name}!")
             )
 
-    async def say_hello_nested(self, stream: Stream[HelloRequest, HelloNestedReply]):
+    async def say_hello_nested(self, stream: Stream[HelloRequest, HelloNestedReply]) -> None:
         request = await stream.recv_message()
         if request:
             await stream.send_message(
                 HelloNestedReply(message=[FooBar(foo="Hello", bar=request.name)])
             )
 
-    async def get_some_collection(self, stream: Stream[SomeRequest, SomeCollection]):
+    async def get_some_collection(self, stream: Stream[SomeRequest, SomeCollection]) -> None:
         request = await stream.recv_message()
         if request:
             await stream.send_message(
                 SomeCollection(rows=fake_data.some_collection[: request.rows_num])
             )
 
-    async def get_some_stream(self, stream: Stream[SomeRequest, SomeRecord]):
+    async def get_some_stream(self, stream: Stream[SomeRequest, SomeRecord]) -> None:
         request = await stream.recv_message()
         if request:
             for row in fake_data.some_collection[: request.rows_num]:
                 await stream.send_message(row)
 
 
-async def main(host="127.0.0.1", port=50051):
+async def main(host: str = "127.0.0.1", port: int = 50051) -> None:
     server = Server([Greeter()])
     with graceful_exit([server]):
         await server.start(host, port)
@@ -82,7 +82,7 @@ async def main(host="127.0.0.1", port=50051):
         await server.wait_closed()
 
 
-def run():
+def run() -> None:
     rows_num: str = sys.argv[1] if len(sys.argv) > 1 else '20_000'
     print(f"Preparing data ({rows_num} rows)")
     fake_data.some_collection = generate_fake_collection(int(rows_num))

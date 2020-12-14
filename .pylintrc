@@ -10,3 +10,5 @@ disable=all
 # either give multiple identifier separated by comma (,) or put this option
 # multiple time.
 enable=F,E,unreachable,duplicate-key,unnecessary-semicolon,global-variable-not-assigned,unused-variable,binary-op-exception,bad-format-string,anomalous-backslash-in-string,bad-open-mode,unused-import
+
+ignore=helloworld.py,helloworld_grpc.py

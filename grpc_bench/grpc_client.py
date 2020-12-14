@@ -1,17 +1,17 @@
 import asyncio
-import json
+# import json
 import sys
-import timeit
-from time import perf_counter
-from typing import List
+# import timeit
+# from time import perf_counter
+# from typing import List
 from tqdm.asyncio import tqdm
-import orjson
+# import orjson
 from grpclib.client import Channel
 
 from .helloworld import GreeterStub, SomeRecord
 
 
-async def main(rows_num: int):
+async def main(rows_num: int) -> None:
     async with Channel(host="127.0.0.1", port=50051) as channel:
         stub = GreeterStub(channel)
 
@@ -50,11 +50,12 @@ async def main(rows_num: int):
         # async for row in stub.get_some_stream(rows_num=rows_num):
         #     print(orjson.dumps(row).decode())
 
-        async for row in tqdm(stub.get_some_stream(rows_num=rows_num), total=rows_num):
+        _: SomeRecord
+        async for _ in tqdm(stub.get_some_stream(rows_num=rows_num), total=rows_num):
             pass
 
 
-def run():
+def run() -> None:
     rows_num: str = sys.argv[1] if len(sys.argv) > 1 else '20_000'
     asyncio.run(main(int(rows_num)))
 
