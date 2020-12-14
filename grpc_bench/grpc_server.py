@@ -1,43 +1,27 @@
 import asyncio
-import datetime
 import sys
 from dataclasses import dataclass
 from typing import List
 
-from faker import Faker  # type: ignore
 from grpclib.server import Server, Stream
 from grpclib.utils import graceful_exit
 
-from .helloworld import (CustomProps, FooBar, HelloNestedReply, HelloReply,
+from data_gen import generate_fake_domain_records, DomainRecord
+from .helloworld import (FooBar, HelloNestedReply, HelloReply,
                          HelloRequest, HelloStreamReply, SomeCollection,
-                         SomeRecord, SomeRequest)
+                         SomeRecord, SomeRequest, CustomProps)
 from .helloworld_grpc import GreeterBase
-
-
-def generate_fake_collection(rows_num: int) -> List[SomeRecord]:
-    fake = Faker()
-    return [
-        SomeRecord(
-            name=fake.name(),
-            address=fake.address(),
-            age=fake.random_int(0, 100),
-            country=fake.country_code(),
-            custom_props=CustomProps(
-                foo=fake.random_int(0, 100),
-                ts=fake.date_time(tzinfo=datetime.timezone.utc),
-                is_active=fake.boolean(),
-            ),
-        )
-        for _ in range(rows_num)
-    ]
 
 
 @dataclass
 class FakeData:
-    some_collection: List[SomeRecord]
+    rows: List[DomainRecord]
+
+    def __init__(self) -> None:
+        self.rows = []
 
 
-fake_data = FakeData(some_collection=[])
+fake_data = FakeData()
 
 
 class Greeter(GreeterBase):
@@ -63,15 +47,34 @@ class Greeter(GreeterBase):
     async def get_some_collection(self, stream: Stream[SomeRequest, SomeCollection]) -> None:
         request = await stream.recv_message()
         if request:
+            rows = [
+                _from_domain_record(row)
+                for row in fake_data.rows[: request.rows_num]
+            ]
             await stream.send_message(
-                SomeCollection(rows=fake_data.some_collection[: request.rows_num])
+                SomeCollection(rows=rows)
             )
 
     async def get_some_stream(self, stream: Stream[SomeRequest, SomeRecord]) -> None:
         request = await stream.recv_message()
         if request:
-            for row in fake_data.some_collection[: request.rows_num]:
-                await stream.send_message(row)
+            for row in fake_data.rows[: request.rows_num]:
+                await stream.send_message(_from_domain_record(row))
+
+
+def _from_domain_record(r: DomainRecord) -> SomeRecord:
+    rcp = r.custom_props
+
+    return SomeRecord(
+        name=r.name,
+        address=r.address,
+        age=r.age,
+        custom_props=CustomProps(
+            foo=rcp.foo,
+            ts=rcp.ts,
+            is_active=rcp.is_active
+        )
+    )
 
 
 async def main(host: str = "127.0.0.1", port: int = 50051) -> None:
@@ -85,7 +88,7 @@ async def main(host: str = "127.0.0.1", port: int = 50051) -> None:
 def run() -> None:
     rows_num: str = sys.argv[1] if len(sys.argv) > 1 else '20_000'
     print(f"Preparing data ({rows_num} rows)")
-    fake_data.some_collection = generate_fake_collection(int(rows_num))
+    fake_data.rows = generate_fake_domain_records(int(rows_num))
     asyncio.run(main())
 
 

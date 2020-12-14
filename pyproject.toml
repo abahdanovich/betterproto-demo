@@ -5,6 +5,7 @@ description = "Protocol benchmark"
 authors = ["Andrzej Bogdanowicz <bahdanovich@gmail.com>"]
 
 packages = [
+    { include="data_gen", from="." },
     { include="grpc_bench", from="." },
 ]
 
