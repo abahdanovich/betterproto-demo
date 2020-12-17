@@ -4,7 +4,7 @@ from typing import List
 
 from gqlclient import GraphQLClient
 from pydantic.dataclasses import dataclass
-from pydantic.json import pydantic_encoder
+from pydantic.json import pydantic_encoder  # pylint: disable=no-name-in-module
 
 
 @dataclass

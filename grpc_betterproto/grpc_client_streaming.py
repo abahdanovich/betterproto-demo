@@ -2,7 +2,6 @@ import asyncio
 
 import sys
 from grpclib.client import Channel
-from tqdm.asyncio import tqdm
 
 from .helloworld import GreeterStub, SomeRecord
 
@@ -12,7 +11,7 @@ async def main(rows_num: int) -> None:
         stub = GreeterStub(channel)
 
         row: SomeRecord
-        async for row in tqdm(stub.get_some_stream(rows_num=rows_num), total=rows_num):
+        async for row in stub.get_some_stream(rows_num=rows_num):
             pass
 
         print(row.to_json())

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Any
 
 from ariadne import QueryType, gql, make_executable_schema, convert_kwargs_to_snake_case
 from ariadne.asgi import GraphQL
@@ -38,7 +38,7 @@ query = QueryType()
 
 @query.field("someCollection")
 @convert_kwargs_to_snake_case
-def some_collection(_, info, rows_num: int):
+def some_collection(_: Any, info: Any, rows_num: int) -> List[dict]:
     return [
         _from_domain_record(row)
         for row in fake_data.rows[: rows_num]
