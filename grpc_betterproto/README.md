@@ -5,25 +5,31 @@ Server
 ------
 
 ```
-poetry run grpc-betterproto-server
+python -m grpc_betterproto.grpc_server
 ```
 
-Output:
-
-```
-Preparing data (20_000 rows)
-Serving on 127.0.0.1:50051
-```
-
-Client
+Client (simple)
 ------
 
 ```
-poetry run grpc-betterproto-client
+time python -m grpc_betterproto.grpc_client_simple | jq
 ```
 
 Output:
 
 ```
-100% | 20000/20000 [00:02<00:00, 7062.40it/s]
+real	0m4,145s
+```
+
+Client (streaming)
+------
+
+```
+time python -m grpc_betterproto.grpc_client_streaming | jq
+```
+
+Output:
+
+```
+real	0m2,783s
 ```
