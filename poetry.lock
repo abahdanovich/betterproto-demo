@@ -553,7 +553,7 @@ full = ["aiofiles", "graphene", "itsdangerous", "jinja2", "python-multipart", "p
 
 [[package]]
 name = "strawberry-graphql"
-version = "0.44.3"
+version = "0.44.4"
 description = "A library for creating GraphQL APIs"
 category = "main"
 optional = false
@@ -631,7 +631,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
 [[package]]
 name = "uvicorn"
-version = "0.13.1"
+version = "0.13.2"
 description = "The lightning-fast ASGI server."
 category = "main"
 optional = false
@@ -1115,8 +1115,8 @@ starlette = [
     {file = "starlette-0.13.8.tar.gz", hash = "sha256:82df29b2149437ad828a883674bf031788600c876dae50835e98398bd1706183"},
 ]
 strawberry-graphql = [
-    {file = "strawberry-graphql-0.44.3.tar.gz", hash = "sha256:ff29389965dae0dcfb1a4403952b3b74fadae5242e8a3574479a576204659084"},
-    {file = "strawberry_graphql-0.44.3-py3-none-any.whl", hash = "sha256:2366e72857bb9be4e0397918b72714388b534daa50587d916337e93faa48d8d3"},
+    {file = "strawberry-graphql-0.44.4.tar.gz", hash = "sha256:79165fe18428b137e45df4b0a5a76e6626dbd97023f3c69309970edd2a7fe48f"},
+    {file = "strawberry_graphql-0.44.4-py3-none-any.whl", hash = "sha256:98ada2f1b8f91626d36a2d3a2e2615111c1f86e8fa6584991c529bb9b6f5537f"},
 ]
 stringcase = [
     {file = "stringcase-1.2.0.tar.gz", hash = "sha256:48a06980661908efe8d9d34eab2b6c13aefa2163b3ced26972902e3bdfd87008"},
@@ -1162,8 +1162,8 @@ urllib3 = [
     {file = "urllib3-1.26.2.tar.gz", hash = "sha256:19188f96923873c92ccb987120ec4acaa12f0461fa9ce5d3d0772bc965a39e08"},
 ]
 uvicorn = [
-    {file = "uvicorn-0.13.1-py3-none-any.whl", hash = "sha256:6fcce74c00b77d4f4b3ed7ba1b2a370d27133bfdb46f835b7a76dfe0a8c110ae"},
-    {file = "uvicorn-0.13.1.tar.gz", hash = "sha256:2a7b17f4d9848d6557ccc2274a5f7c97f1daf037d130a0c6918f67cd9bc8cdf5"},
+    {file = "uvicorn-0.13.2-py3-none-any.whl", hash = "sha256:6707fa7f4dbd86fd6982a2d4ecdaad2704e4514d23a1e4278104311288b04691"},
+    {file = "uvicorn-0.13.2.tar.gz", hash = "sha256:d19ca083bebd212843e01f689900e5c637a292c63bb336c7f0735a99300a5f38"},
 ]
 wrapt = [
     {file = "wrapt-1.12.1.tar.gz", hash = "sha256:b62ffa81fb85f4332a4f609cab4ac40709470da05643a082ec1eb88e6d9b97d7"},
